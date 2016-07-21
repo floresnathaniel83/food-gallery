@@ -17,6 +17,24 @@ const usersSchema = new Schema({
 
 })
 
+const dishSchema = new Schema ({ //>>> create schema
+
+	description: {type: String, required: true}, //>>> required user must provide data
+	rating: {type: String, required: true},
+	likes: {type: Number, default: 0},
+	location: {type: String, required: true},
+	title: {type: String, required: true},
+	authorEmail: {type: String, required: true},
+	authorId: {type: String, required: true},
+	imageUrl: {type: String, required: true},
+	tags:{type: [String], default: []}
+
+
+})
+
 module.exports = {
-  User: createModel('User', usersSchema)
+  User: createModel('User', usersSchema), //>>> exports schema
+  Dish: createModel('Dish', dishSchema)
 }
+
+

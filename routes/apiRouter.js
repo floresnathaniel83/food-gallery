@@ -2,7 +2,8 @@ let Router = require('express').Router;
 const apiRouter = Router()
 let helpers = require('../config/helpers.js')
 
-let User = require('../db/schema.js').User
+let User = require('../db/schema.js').User //>>> imports schema
+let Dish = require('../db/schema.js').Dish
 
   
   apiRouter
@@ -41,6 +42,49 @@ let User = require('../db/schema.js').User
     })
 
     // Routes for a Model(resource) should have this structure
+    
+    //>>> build routes
+    
+    //>>> creates a new dish and puts it into db
+    apiRouter.post('/dishes', function(req, res){
+      let dish = new Dish(request.body) //>>> creates new instance of schema from a mongoose model, request has the properties or all the information that we have taken from the client side and sends it on the body of the request to the server
+      dish.save(function (err) { //saves to db
+        if(err) {
+          return response.send(err)
+
+        } else {
+            response.json(dish)
+
+        }
+
+      })
+
+    })
+    //>>> gets all dishes
+    apiRouter.get('/dishes', function (req, res){
+      Dish.find(request.query, function(err, records){ //>>>request.query filters out request and turns into an object
+        if(error) {
+          response.send(error)
+        } else {
+          response.json(records)
+
+          }
+
+       }) 
+
+    })
+
+  apiRouter.get('/user/dishes', function (req, res){
+    Dish.find({authorId: request.user._id}, function(error, records){
+
+        if(error) {
+          response.send(error)
+        } else {
+          response.json(records)
+
+          }
+      }) 
+  })
 
 
 module.exports = apiRouter

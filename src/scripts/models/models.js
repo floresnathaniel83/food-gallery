@@ -2,20 +2,19 @@ import Backbone from 'backbone'
 import $ from 'jquery'
 import {app_name} from '../app'
 
+
+
 // ..x..x..x..x..x..x..x..x..x..x..x..x..x..x..x..x..x..x..x..x..x..x
 const UserAuthModel = Backbone.Model.extend({
 	urlRoot: '/api/users',
 	idAttribute: '_id'
 })
 
-UserAuthModel.register = function(email,password) {
+UserAuthModel.register = function(userObj) {
 	return $.ajax({
 		type: 'post',
 		url: '/auth/register',
-		data: {
-			email: email,
-			password: password
-		}
+		data: userObj
 	})
 }
 
