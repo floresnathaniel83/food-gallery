@@ -2,10 +2,22 @@ import Backbone from 'backbone'
 import $ from 'jquery'
 import {app_name} from '../app'
 
+export const DishModel = Backbone.Model.extend({
+	urlRoot: '/api/dishes', //>>> urlRoot keyword allows additions to url based on api action you want to do
+	idAttribute: '_id'
+})
+
+export const DishCollection = Backbone.Collection.extend ({
+	model: DishModel,
+	url: '/api/dishes'
+
+})
+
+
 
 
 // ..x..x..x..x..x..x..x..x..x..x..x..x..x..x..x..x..x..x..x..x..x..x
-const UserAuthModel = Backbone.Model.extend({
+export const UserAuthModel = Backbone.Model.extend({
 	urlRoot: '/api/users',
 	idAttribute: '_id'
 })
@@ -47,10 +59,10 @@ UserAuthModel.getCurrentUser = function() {
 // ^^ DO NOT TOUCH ^^
 
 // but, you may extend the UserAuthModel (which is a Backbone Model)
-const User = UserAuthModel.extend({
+export const User = UserAuthModel.extend({
 	initialize: function(){
 
 	}
 })
 
-export { User }
+export { User, DishModel, DishCollection }

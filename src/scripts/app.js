@@ -6,6 +6,7 @@ import LoginView from './views/loginView'
 import Dashboard from './views/dashboard'
 import DishesView from './views/dishesView'
 import ComposeView from './views/composeView'
+import {User, DishModel} from './models/models'
 
 
 //STEP 5 (build your client side api routes)
@@ -42,6 +43,11 @@ const app = function() {
 
         initialize: function() { //good way to add logic to check if a user is logged in to protect certain routes
             Backbone.history.start()
+            this.on('route', function (handlerName) {
+                if(!User.getCurrentUser()) {
+                    location.hash = 'login'
+                } 
+            })
         }
     })
     new AppRouter()
