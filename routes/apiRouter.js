@@ -31,7 +31,7 @@ let Dish = require('../db/schema.js').Dish //STEP THREE (import schema)
         })
       })
     })
-    .delete('/users/:_id', function(req, res){
+    .delete('/users/:_id', function(request,response){
       User.remove({ _id: req.params._id}, (err) => {
         if(err) return res.json(err)
         res.json({
@@ -46,7 +46,7 @@ let Dish = require('../db/schema.js').Dish //STEP THREE (import schema)
     //>>> build routes
     
     //>>> creates a new dish and puts it into db
-    apiRouter.post('/dishes', function(req, res){
+    apiRouter.post('/dishes', function(request,response){
       let dish = new Dish(request.body) //>>> creates new instance of schema from a mongoose model, request has the properties or all the information that we have taken from the client side and sends it on the body of the request to the server
       dish.save(function (err) { //saves to db
         if(err) {
@@ -61,7 +61,7 @@ let Dish = require('../db/schema.js').Dish //STEP THREE (import schema)
 
     })
     //>>> gets all dishes
-    apiRouter.get('/dishes', function (req, res){
+    apiRouter.get('/dishes', function (request,response){
       Dish.find(request.query, function(err, records){ //>>>request.query filters out request and turns into an object
         if(error) {
           response.send(error)
@@ -74,7 +74,7 @@ let Dish = require('../db/schema.js').Dish //STEP THREE (import schema)
 
     })
 
-  apiRouter.get('/user/dishes', function (req, res){
+  apiRouter.get('/user/dishes', function (request,response){
     Dish.find({authorId: request.user._id}, function(error, records){
 
         if(error) {
