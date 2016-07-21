@@ -10,7 +10,7 @@ const UserAuthModel = Backbone.Model.extend({
 	idAttribute: '_id'
 })
 
-UserAuthModel.register = function(userObj) {
+UserAuthModel.register = function(userObj) { //we changed this and Justin pushed it to tiy-fullstack for later use
 	return $.ajax({
 		type: 'post',
 		url: '/auth/register',

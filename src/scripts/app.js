@@ -2,63 +2,53 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import Backbone from 'backbone'
 import init from './init'
-import Header from './views/Header'
-import LoginView from './views/LoginView'
-import DishesView from './views/LoginView'
-import ComposeView from './views/LoginView'
-import MyDishesView from './views/LoginView'
+import LoginView from './views/loginView'
+import Dashboard from './views/dashboard'
+import DishesView from './views/dishesView'
+import ComposeView from './views/composeView'
 
 
+//STEP 5 (build your client side api routes)
 const app = function() {
 
-	var AppRouter = Backbone.Router.extend ({
-		routes: {
-			'home' : 'homeHandler',
-			'dish/postDishes' : 'postDishHandler',
-			'dish/myDishes' : 'myDishHandler',
-			'login' : 'loginHandler',
-			'*catchall':'redirect'
+    var AppRouter = Backbone.Router.extend ({
+        routes: {
+            'home': 'goHome',
+            'dish/postDishes': 'handleDishPost', // VVV these routes were determined by the routes we used in the Header
+            'dish/myDishes': 'handleMyPosts',
+            'login': 'handleLogin',
+            '*catchall': 'redirectHome'
+        },
 
+        goHome: function() {
+            ReactDOM.render(<Dashboard />, document.querySelector('.container')) //don't need to pass anything onto props because we will be doing that in the store
+        },
 
-		},
+        handleDishPost: function() {
+            ReactDOM.render(<ComposeView />, document.querySelector('.container'))
+        },
 
-		homeHandler: function () {
-			ReactDOM.render(<DishesView />, document.querySelector('.container'))
+        handleMyPosts: function() {
+            ReactDOM.render(<DishesView />, document.querySelector('.container'))
+        },
 
-		},
+        handleLogin: function() {
+            ReactDOM.render(<LoginView />, document.querySelector('.container'))
+        },
 
-		postDishHandler: function () {
-			ReactDOM.render(<ComposeView />, document.querySelector('.container'))
+        redirectHome: function() {
+            location.hash = 'home'
+        },
 
-		},
-
-		myDishHandler: function () {
-			ReactDOM.render(<MyDishesView />, document.querySelector('.container'))
-
-		},
-
-		loginHandler: function () {
-			ReactDOM.render(<LoginView />, document.querySelector('.container'))
-
-		},
-
-		redirect: function () {
-			location.hash = 'home'
-		},
-
-		initialize: function () {
-			Backbone.history.start()
-
-		}
-
-	})
-
-new AppRouter()
-
+        initialize: function() { //good way to add logic to check if a user is logged in to protect certain routes
+            Backbone.history.start()
+        }
+    })
+    new AppRouter()
 }
 
 // x..x..x..x..x..x..x..x..x..x..x..x..x..x..x..x..
-// NECESSARY FOR USER FUNCTIONALITY. DO NOT CHANGE. 
+// NECESSARY FOR USER FUNCTIONALITY. DO NOT CHANGE.
 export const app_name = init()
 app()
 // x..x..x..x..x..x..x..x..x..x..x..x..x..x..x..x..
