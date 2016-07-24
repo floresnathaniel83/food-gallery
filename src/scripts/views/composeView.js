@@ -17,6 +17,12 @@ const ComposeView = React.createClass({
 })
 
 const DishPostingForm = React.createClass({
+
+	getInitialState: function () {
+		return {
+			currentDishRating: 0
+		}
+	},
 	
 	_handleCompose: function (e) {
 		e.preventDefault()
@@ -24,10 +30,12 @@ const DishPostingForm = React.createClass({
 			title: e.currentTarget.title.value,
 			description: e.currentTarget.description.value,
 			location: e.currentTarget.location.value,
-			rating: e.currentTarget.rating.value,
+			rating: this.state.currentDishRating,
 			authorId: User.getCurrentUser()._id,
 			authorEmail: User.getCurrentUser().email,
-			imageUrl: this.url ? this.url: '../assets/images/empty-plate.jpg'
+			imageUrl: this.url ? this.url: '/images/empty-plate.jpg',
+			tags: e.currentTarget.tags.value.split(",")
+
 		})
 
 	},
@@ -39,6 +47,29 @@ const DishPostingForm = React.createClass({
 
 	},
 
+	_handleStar: function (evt) {
+		this.setState ({
+			currentDishRating: parseInt(evt.target.dataset.rating)
+		})
+
+	},
+
+	_generateStarsJsx: function (ratingVal) {
+		var JsxStars = []
+		for(var i=1; i<=5; i++) {
+			let starStyle = {fontSize: 30}
+			if(i <= ratingVal) {
+				starStyle.color = 'yellow'
+			}
+			let JsxStar = <span style={starStyle} data-rating={i} onClick={this._handleStar}>&#9734;</span>
+			JsxStars.push(JsxStar)
+				
+		}
+		
+		return JsxStars
+
+	},
+
 	render: function() {
 		return (
 			
@@ -47,8 +78,10 @@ const DishPostingForm = React.createClass({
 					<input type = 'text' name = 'title' placeholder = 'Enter the dish title' />
 					<textarea type = 'text' name = 'description' placeholder = 'Enter description'></textarea>
 					<input type = 'text' name = 'location' placeholder = 'Enter location'/>
-					<input type = 'text' name = 'rating' placeholder = 'Rate Us'/>
+					{this._generateStarsJsx(this.state.currentDishRating)}
+					<input type = 'text' name = 'tags' placeholder = 'input tags seperate with commas '/>
 					<ReactFilepicker apikey= 'A0hkVciLxQAuC7SR2RhKDz' onSuccess={this._handleImage}/>
+
 					<button type = 'submit'>Submit</button>
 				</form>
 			</div>

@@ -82,8 +82,8 @@ form {
 	}
 }
 
-.inbox {
-	.msg {
+.dishContainer {
+	.dish {
 		border: 3px solid $ourPink;
 		background: white;
 		width: 30%;
@@ -95,7 +95,7 @@ form {
 			margin: 1% 0;
 		}
 
-		.msgDeets {
+		.dish {
 			display: inline-block;
 			vertical-align: center;
 			margin-right: 10%;

@@ -1,6 +1,7 @@
 //STEP 6 (CREATE ACTIONS MODULE)
 
-import {User, DishModel} from './models/models'
+import {User, DishModel, DishCollection} from './models/models'
+import DISH_STORE from './store'
 
 const ACTIONS = {
 
@@ -51,7 +52,46 @@ const ACTIONS = {
             }
         )
 
+    },
+
+    // /api/dishes
+    // /api/dishes?authorId=«_id»
+    // /api/dishes?authorId=«_id»&tags=«my-tags»
+    fetchDishes: function(queryObj) {
+
+        DISH_STORE.data.collection.fetch({
+            data: queryObj
+        })
+
+        
+
+        // let dishesColl = new DishCollection()
+
+        // dishesColl.fetch({
+        //     data: queryObj
+        // })
+
+        // DISH_STORE.setStore('collection', 'yah sure')
+    },
+
+    likeDish: function(dish, userObj) {
+        console.log(User.getCurrentUser()._id)
+        //dish.get('likes').push(userObj._id)
+        dish.set({
+            likes: dish.get('likes').concat(userObj._id)
+
+        })
+
+        dish.save()
+        DISH_STORE.data.collection.fetch()
+
+    },
+
+    updateView: function(viewString) {
+        DISH_STORE.set('viewType',viewString)
     }
+
+
 }
 
 export default ACTIONS

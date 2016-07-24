@@ -16,21 +16,21 @@ const app = function() {
         routes: {
             'home': 'goHome',
             'dish/postDishes': 'handleDishPost', // VVV these routes were determined by the routes we used in the Header
-            'dish/myDishes': 'handleMyPosts',
+            'dish/myDishes': 'handleMyDishes',
             'login': 'handleLogin',
             '*catchall': 'redirectHome'
         },
 
         goHome: function() {
-            ReactDOM.render(<Dashboard />, document.querySelector('.container')) //don't need to pass anything onto props because we will be doing that in the store
+            ReactDOM.render(<Dashboard routedFrom = 'home' />, document.querySelector('.container')) //don't need to pass anything onto props because we will be doing that in the store
         },
 
         handleDishPost: function() {
             ReactDOM.render(<ComposeView />, document.querySelector('.container'))
         },
 
-        handleMyPosts: function() {
-            ReactDOM.render(<DishesView />, document.querySelector('.container'))
+        handleMyDishes: function() {
+            ReactDOM.render(<Dashboard routedFrom = 'dish/myDishes' />, document.querySelector('.container'))
         },
 
         handleLogin: function() {

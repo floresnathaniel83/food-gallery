@@ -41,51 +41,6 @@ let Dish = require('../db/schema.js').Dish //STEP THREE (import schema)
       })
     })
 
-    // Routes for a Model(resource) should have this structure
-    
-    //>>> build routes
-    
-    //>>> creates a new dish and puts it into db
-    apiRouter.post('/dishes', function(request,response){
-      let dish = new Dish(request.body) //>>> creates new instance of schema from a mongoose model, request has the properties or all the information that we have taken from the client side and sends it on the body of the request to the server
-      dish.save(function (err) { //saves to db
-        if(err) {
-          return response.send(err)
-
-        } else {
-            response.json(dish)
-
-        }
-
-      })
-
-    })
-    //>>> gets all dishes
-    apiRouter.get('/dishes', function (request,response){
-      Dish.find(request.query, function(err, records){ //>>>request.query filters out request and turns into an object
-        if(error) {
-          response.send(error)
-        } else {
-          response.json(records)
-
-          }
-
-       }) 
-
-    })
-
-  apiRouter.get('/user/dishes', function (request,response){
-    Dish.find({authorId: request.user._id}, function(error, records){
-
-        if(error) {
-          response.send(error)
-        } else {
-          response.json(records)
-
-          }
-      }) 
-  })
-
 //STEP FOUR (build your server side apiroutes)
 
 //this route will create a brand new dish that we will put in the db
@@ -99,6 +54,18 @@ apiRouter.post('/dishes', function(request, response) {
             response.json(dish)
         }
     })
+})
+
+apiRouter.put('/dishes/:_id', function(request,response){
+  Dish.findByIdAndUpdate(request.params._id, request.body, function(error, records){
+        if(error) {
+            response.send(error)
+        }
+        else {
+            response.json(records)
+        }
+    })
+
 })
 
 //this route will show us all the dishes posted by all users

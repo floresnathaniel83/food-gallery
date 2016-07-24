@@ -3,10 +3,10 @@ import _ from 'underscore'
 import {DishCollection} from './models/models'
 
 const DISH_STORE = _.extend(Backbone.Events, {
-
 	data: {
-
-		collection: new DishCollection()
+		collection: new DishCollection(),
+		viewType: 'all',
+		formTitle: ''
 
 	},
 
@@ -21,6 +21,15 @@ const DISH_STORE = _.extend(Backbone.Events, {
 
 	_initialize: function () {
 		this.data.collection.on('sync update', this._emitChange.bind(this))
+	},
+
+	setStore: function(prop, payload){
+		if(typeof this.data[prop] === 'undefined') {
+			throw Error(`'${prop}' data-property not defined on store, pls define at start of application`)
+		}
+		this.data[prop] = payload
+		this._emitChange()
+
 	}
 })
 
