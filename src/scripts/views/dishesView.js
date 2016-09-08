@@ -63,6 +63,7 @@ const Dish = React.createClass({
 			<div className="dish">
 				<p>{this.props.dishModel.get('title')}</p>
 				<p>{this.props.dishModel.get('description')}</p>
+				
 			</div>
 			)
 	}

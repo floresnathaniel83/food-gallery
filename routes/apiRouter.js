@@ -93,5 +93,24 @@ apiRouter.get('/user/dishes', function(request, response) {
     })
 })
 
+apiRouter.delete('/dishes/:_id',function(request,response){
+  //request.params contains the variables that were in the route pattern, expressed in the form 
+  // [route placeholder]: [value sent]
+  let theId = request.params._id
+  // console.log(request.body)
+  Dish.remove({_id:theId},function(err) {
+    if (err) {
+      response.json({
+        error: err
+      })
+    }
+    else {
+      response.status(200).json({
+        msg: 'record successfully deleted!'
+      })
+    }
+  })
+})
+
 
 module.exports = apiRouter

@@ -58,7 +58,6 @@ const ACTIONS = {
     // /api/dishes?authorId=«_id»
     // /api/dishes?authorId=«_id»&tags=«my-tags»
     fetchDishes: function(queryObj) {
-
         DISH_STORE.data.collection.fetch({
             data: queryObj
         })
@@ -72,6 +71,13 @@ const ACTIONS = {
         // })
 
         // DISH_STORE.setStore('collection', 'yah sure')
+    },
+
+    deleteDishes: function (modelId) {
+        let dish = DISH_STORE.data.collection.get(modelId)
+        dish.destroy()
+
+
     },
 
     likeDish: function(dish, userObj) {

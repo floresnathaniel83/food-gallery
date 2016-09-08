@@ -12,8 +12,6 @@ const Dashboard = React.createClass({
 	 },
 
 	 componentWillReceiveProps: function (newProps) {
-	 	console.log('this.props: ', this.props)
-	 	console.log('newProps: ', newProps)
 	 	let queryForDishes
 	 	if(newProps.routedFrom === 'dish/myDishes') {
 	 		 queryForDishes = {'authorId' : User.getCurrentUser()._id}
@@ -30,8 +28,6 @@ const Dashboard = React.createClass({
 	 },
 
 	 componentWillMount: function () {
-	 	//console.log('getCurrentUser', User.getCurrentUser() )
-	 	//console.log(this.props.routedFrom)
 	 	let queryForDishes
 	 	if(this.props.routedFrom === 'dish/myDishes') {
 	 		 queryForDishes = {'authorId' : User.getCurrentUser()._id}
@@ -54,45 +50,54 @@ const Dashboard = React.createClass({
 	},
 
 	_handleTagSearch: function (evt) {
-
 		if(evt.keyCode === 13) {
-			console.log(evt.target.value)
-			ACTIONS.fetchDishes(evt.target.value)
+			ACTIONS.fetchDishes({'tags' : evt.target.value})
 			evt.target.value = " "
 		}
 	},
 
 	 render: function() {
-	 	console.log(this.state)
+	 	console.log(this.props)
 	 	return (
 	 		<div className='dashboard' >
 	 			<Header />
-	 				<input onKeyDown = {this._handleTagSearch} type = 'text' placeholder = 'enter tag'/>
-	 				<h3>dashboard</h3>
-	 			<DishContainer dishColl = {this.state.collection}/>
+	 			<div className='tagSearch'><input onKeyDown = {this._handleTagSearch} type = 'text' placeholder = 'enter tag'/></div>
+	 			<h3>dashboard</h3>
+	 			<DishContainer dishColl = {this.state.collection} />
 	 		</div>
 	 	)
  	}
 })
 
 const DishContainer = React.createClass({
-	
 	render: function() {
 		return (
-			<div className="dishContainer">
-				{this.props.dishColl.map(
-					(model) => <Dish dishModel = {model} key = {model.id} />)}
-			</div>
+				<div className="dishContainer">
+					{this.props.dishColl.map(
+						(model) => <Dish key={model.id} dishModel={model}/>
+
+						)}
+
+				</div>
 			)
 	}
 })
 
 const Dish = React.createClass({
+
+
+	_handleDelete: function () {
+		ACTIONS.deleteDishes(this.props.dishModel.id)
+
+	},
+
 	_handleLikes: function () {
 		ACTIONS.likeDish(this.props.dishModel, User.getCurrentUser())
 	},
 
 	render: function() {
+		console.log(this.props)
+	
 		return (
 			<div className="dish">
 				<p>user: {this.props.dishModel.get('authorEmail')}</p>
@@ -103,6 +108,8 @@ const Dish = React.createClass({
 				<p>tags: {this.props.dishModel.get('tags')}</p>
 				<p>rating: {this.props.dishModel.get('rating')}</p>
 				<p>likes: {this.props.dishModel.get('likes').length}</p>
+
+				<button onClick = {this._handleDelete}>X</button>
 				<button onClick = {this._handleLikes}>like</button>
 			</div>
 			)

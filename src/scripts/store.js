@@ -4,9 +4,7 @@ import {DishCollection} from './models/models'
 
 const DISH_STORE = _.extend(Backbone.Events, {
 	data: {
-		collection: new DishCollection(),
-		viewType: 'all',
-		formTitle: ''
+		collection: new DishCollection()
 
 	},
 

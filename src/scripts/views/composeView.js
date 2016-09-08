@@ -21,6 +21,7 @@ const DishPostingForm = React.createClass({
 	getInitialState: function () {
 		return {
 			currentDishRating: 0
+		
 		}
 	},
 	
@@ -53,7 +54,7 @@ const DishPostingForm = React.createClass({
 		})
 
 	},
-
+	
 	_generateStarsJsx: function (ratingVal) {
 		var JsxStars = []
 		for(var i=1; i<=5; i++) {
@@ -70,7 +71,9 @@ const DishPostingForm = React.createClass({
 
 	},
 
+
 	render: function() {
+		//console.log(this.state)
 		return (
 			
 			<div className="dishPostingForm">
@@ -79,9 +82,8 @@ const DishPostingForm = React.createClass({
 					<textarea type = 'text' name = 'description' placeholder = 'Enter description'></textarea>
 					<input type = 'text' name = 'location' placeholder = 'Enter location'/>
 					{this._generateStarsJsx(this.state.currentDishRating)}
-					<input type = 'text' name = 'tags' placeholder = 'input tags seperate with commas '/>
+					<input type = 'text' name = 'tags' placeholder = 'input tags seperate with commas' />
 					<ReactFilepicker apikey= 'A0hkVciLxQAuC7SR2RhKDz' onSuccess={this._handleImage}/>
-
 					<button type = 'submit'>Submit</button>
 				</form>
 			</div>
