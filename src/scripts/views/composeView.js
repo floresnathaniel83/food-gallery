@@ -1,7 +1,7 @@
 import React from 'react'
 import Header from './header'
 import ACTIONS from '../actions'
-import {User} from '../models/models'
+import {User, DishModel} from '../models/models'
 import ReactFilepicker from 'react-filepicker'
 
 const ComposeView = React.createClass({
@@ -42,8 +42,7 @@ const DishPostingForm = React.createClass({
 	},
 
 	_handleImage: function (result) {
-		//console.log(result) test make sure it works
-		this.url = result.url //
+		this.url = result.url 
 
 
 	},
@@ -87,6 +86,7 @@ const DishPostingForm = React.createClass({
 					<button type = 'submit'>Submit</button>
 				</form>
 			</div>
+			
 			)
 	}
 })

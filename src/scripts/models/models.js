@@ -7,19 +7,11 @@ export const DishModel = Backbone.Model.extend({
 	idAttribute: '_id'
 })
 
-// export const DishCollection = Backbone.Collection.extend ({
-// 	model: DishModel,
-// 	url: '/api/user/dishes'
-
-// })
-
 export const DishCollection = Backbone.Collection.extend ({
 	model: DishModel,
 	url: '/api/dishes'
 
 })
-
-
 
 // ..x..x..x..x..x..x..x..x..x..x..x..x..x..x..x..x..x..x..x..x..x..x
 export const UserAuthModel = Backbone.Model.extend({

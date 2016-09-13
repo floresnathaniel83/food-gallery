@@ -12,6 +12,7 @@ const Dashboard = React.createClass({
 	 },
 
 	 componentWillReceiveProps: function (newProps) {
+	 	console.log(newProps)
 	 	let queryForDishes
 	 	if(newProps.routedFrom === 'dish/myDishes') {
 	 		 queryForDishes = {'authorId' : User.getCurrentUser()._id}
@@ -22,8 +23,6 @@ const Dashboard = React.createClass({
 	 	}
 
 	 	ACTIONS.fetchDishes(queryForDishes)
-
-
 
 	 },
 
@@ -36,7 +35,7 @@ const Dashboard = React.createClass({
 	 		 queryForDishes = {}
 
 	 	}
-	 	
+	 
 	 	ACTIONS.fetchDishes(queryForDishes)
 
 	 	DISH_STORE.on('updateContent', () => {
@@ -57,7 +56,6 @@ const Dashboard = React.createClass({
 	},
 
 	 render: function() {
-	 	console.log(this.props)
 	 	return (
 	 		<div className='dashboard' >
 	 			<Header />
@@ -96,8 +94,6 @@ const Dish = React.createClass({
 	},
 
 	render: function() {
-		console.log(this.props)
-	
 		return (
 			<div className="dish">
 				<p>user: {this.props.dishModel.get('authorEmail')}</p>
@@ -114,6 +110,7 @@ const Dish = React.createClass({
 			</div>
 			)
 	}
+	
 })
 
 export default Dashboard
